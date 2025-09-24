@@ -9,8 +9,8 @@ describe('Login', () => {
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
-                    'username': 'julio.lima',
-                    'senha': 123456
+                    username: 'julio.lima',
+                    senha: 123456
                 })
 
             expect(resposta.statusCode).to.equal(200)
@@ -24,8 +24,8 @@ describe('Login', () => {
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
-                    'username': 'julio.lima',
-                    'senha': 'pwd123'
+                    username: 'julio.lima',
+                    senha: 'pwd123'
                 })
 
             expect(resposta.statusCode).to.equal(401)
@@ -39,8 +39,8 @@ describe('Login', () => {
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
-                    'username': 'joao.souza',
-                    'senha': '123456'
+                    username: 'joao.souza',
+                    senha: '123456'
                 })
 
             expect(resposta.statusCode).to.equal(401)
@@ -54,7 +54,7 @@ describe('Login', () => {
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
-                    'senha': '123456'
+                    senha: '123456'
                 })
 
             expect(resposta.statusCode).to.equal(400)
@@ -68,7 +68,7 @@ describe('Login', () => {
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
-                    'username': 'joao.souza',
+                    username: 'joao.souza',
                 })
 
             expect(resposta.statusCode).to.equal(400)
