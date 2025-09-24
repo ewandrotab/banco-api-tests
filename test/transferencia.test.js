@@ -7,9 +7,14 @@ const { obterToken } = require('../helpers/autenticacao.js')
 
 describe('Transferências', () => {
     describe('POST /transferencias', () => {
-        it('Deve retornar status 201 quando realizada uma transferência com valor maior que a R$ 10,00', async () => {
 
-            const token = await obterToken('julio.lima', '123456')
+        let token 
+        beforeEach(async () => {
+            token = await obterToken('julio.lima', '123456')
+
+        })
+
+        it('Deve retornar status 201 quando realizada uma transferência com valor maior que a R$ 10,00', async () => {
 
             const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
@@ -28,8 +33,6 @@ describe('Transferências', () => {
 
         it('Deve retornar status 201 quando realizada uma transferência com valor igual a R$ 10,00', async () => {
 
-            const token = await obterToken('julio.lima', '123456')
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
@@ -46,9 +49,7 @@ describe('Transferências', () => {
         })
 
         it('Deve retornar status 422 quando tento realizar uma transferência com valor menor que R$ 10,00', async () => {
-
-            const token = await obterToken('julio.lima', '123456')
-
+            
             const resposta = await request('http://localhost:3000')
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
