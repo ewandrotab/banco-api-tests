@@ -1,11 +1,13 @@
 const { expect } = require('chai')
 const request = require('supertest')
 
+require('dotenv').config()
+
 describe('Login', () => {
     describe('POST /login', () => {
         it('Deve retornar 200 com token em string quando usar credenciais válidas', async () => {
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -20,7 +22,7 @@ describe('Login', () => {
 
         it('Deve retornar 401 quando a senha estiver incorreta', async () => {
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -35,7 +37,7 @@ describe('Login', () => {
 
         it('Deve retornar 401 quando o usuário não existir', async () => {
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -50,7 +52,7 @@ describe('Login', () => {
 
         it('Deve retornar 400 quando não informar o usuário', async () => {
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -64,7 +66,7 @@ describe('Login', () => {
 
         it('Deve retornar 400 quando não informar a senha', async () => {
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -79,7 +81,7 @@ describe('Login', () => {
 
     describe('GET /login', () => {
         it('Deve retornar 405 quando tentar utilizar o médoto GET', async () => {
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .get('/login')
                 .set('Content-Type', 'application/json')
 

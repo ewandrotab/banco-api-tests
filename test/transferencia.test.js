@@ -1,6 +1,8 @@
 const { expect } = require('chai')
 const request = require('supertest')
 
+require('dotenv').config()
+
 const { obterToken } = require('../helpers/autenticacao.js')
 
 describe('Transferências', () => {
@@ -9,7 +11,7 @@ describe('Transferências', () => {
 
             const token = await obterToken('julio.lima', '123456')
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
                 .set('Authorization', `Bearer ${token}`)
@@ -28,7 +30,7 @@ describe('Transferências', () => {
 
             const token = await obterToken('julio.lima', '123456')
 
-            const resposta = await request('http://localhost:3000')
+            const resposta = await request(process.env.BASE_URL)
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
                 .set('Authorization', `Bearer ${token}`)
