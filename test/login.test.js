@@ -1,5 +1,6 @@
 const { expect } = require('chai')
 const request = require('supertest')
+const postLogin = require('../fixtures/postLogin.json')
 
 require('dotenv').config()
 
@@ -7,13 +8,12 @@ describe('Login', () => {
     describe('POST /login', () => {
         it('Deve retornar 200 com token em string quando usar credenciais válidas', async () => {
 
+            const body = {... postLogin}
+
             const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    username: 'julio.lima',
-                    senha: 123456
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(200)
             expect(resposta.body.token).to.be.a('string')
@@ -22,13 +22,13 @@ describe('Login', () => {
 
         it('Deve retornar 401 quando a senha estiver incorreta', async () => {
 
+            const body = {... postLogin}
+            body.senha = 'pwd123'
+
             const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    username: 'julio.lima',
-                    senha: 'pwd123'
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(401)
             expect(resposta.body.error).to.equal('Usuário ou senha inválidos.')
@@ -37,13 +37,13 @@ describe('Login', () => {
 
         it('Deve retornar 401 quando o usuário não existir', async () => {
 
+            const body = {... postLogin}
+            body.username = 'joao.souza'
+
             const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    username: 'joao.souza',
-                    senha: '123456'
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(401)
             expect(resposta.body.error).to.equal('Usuário ou senha inválidos.')
@@ -52,12 +52,13 @@ describe('Login', () => {
 
         it('Deve retornar 400 quando não informar o usuário', async () => {
 
+            const body = {... postLogin}
+            delete body.username
+
             const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    senha: '123456'
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(400)
             expect(resposta.body.error).to.equal('Usuário e senha são obrigatórios.')
@@ -66,12 +67,13 @@ describe('Login', () => {
 
         it('Deve retornar 400 quando não informar a senha', async () => {
 
+            const body = {... postLogin}
+            delete body.senha
+            
             const resposta = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    username: 'joao.souza',
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(400)
             expect(resposta.body.error).to.equal('Usuário e senha são obrigatórios.')
