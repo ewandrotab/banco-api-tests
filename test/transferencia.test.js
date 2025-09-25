@@ -53,12 +53,7 @@ describe('Transferências', () => {
                 .post('/transferencias')
                 .set('Content-Type', 'application/json')
                 .set('Authorization', `Bearer ${token}`)
-                .send({
-                    contaOrigem: 1,
-                    contaDestino: 2,
-                    valor: 9.99,
-                    token: ''
-                })
+                .send(body)
 
             expect(resposta.statusCode).to.equal(422)
             expect(resposta.body.error).to.equal('O valor da transferência deve ser maior ou igual a R$10,00.')
